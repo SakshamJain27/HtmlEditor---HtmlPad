@@ -11,11 +11,8 @@ import pyautogui
 root = Tk()
 root.title(f"Untitled - HtmlPad")
 
-p1 = PhotoImage(file = 'logo.png')
-root.iconphoto(False, p1)
 
-
-def quit():
+def quit(event):
     global HTMLFILE
     if HTMLFILE==None:
         a = meassge1.askquestion("Exit","You have not saved work, do you want to save it")
@@ -29,7 +26,7 @@ def gethelp():
     meassge1.showinfo("Info", "This App Made By Saksham Jain")
 
 
-def run():
+def run(event):
     global HTMLFILE
     if HTMLFILE == None:
 
@@ -78,14 +75,14 @@ def undo():
 def redo():
     htmlarea.event_generate("<<Redo>>")
 
-def newfile():
+def newfile(event):
        global HTMLFILE
        root.title("Untitled - HtmlPad")
        HTMLFILE = None
        htmlarea.delete(1.0,END)
 
 
-def openfile():
+def openfile(event):
       global HTMLFILE
       global CSSFILE
       global JSFILE
@@ -238,12 +235,6 @@ def p():
     htmlarea.insert(INSERT, "<p></p>")
 
 
-def select_text(event):
-    textbox.tag_add(SEL, "1.0", END)
-    textbox.mark_set(INSERT, "1.0")
-    textbox.see(INSERT)
-    return 'break'
-
 HTMLFILE = None
 CSSFILE = None
 JSFILE = None
@@ -332,5 +323,18 @@ Help.add_command(label="Help",command=help)
 MainMenu.add_cascade(menu=Help,label="Help", foreground = 'white')
 
 root.config(menu=MainMenu)
+
+root.bind("<Control-Key-O>", openfile)
+root.bind("<Control-Key-o>", openfile)
+
+root.bind("<Control-Shift-Key-R>", run)
+root.bind("<Control-Shift-Key-r>", run)
+
+root.bind("<Control-Key-Q>", quit)
+root.bind("<Control-Key-q>", quit)
+
+root.bind("<Control-Key-N>", newfile)
+root.bind("<Control-Key-n>", newfile)
+
 
 root.mainloop()
